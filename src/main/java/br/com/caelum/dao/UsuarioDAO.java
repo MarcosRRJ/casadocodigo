@@ -29,4 +29,8 @@ public class UsuarioDAO implements UserDetailsService {
 		return usuarios.get(0);
 	}
 
+	public void gravar(Usuarios usuario) {
+		manager.persist(usuario);
+	}
+
 }

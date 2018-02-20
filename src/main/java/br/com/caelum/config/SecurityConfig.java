@@ -23,16 +23,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    .antMatchers("/produtos/form").hasRole("ADMIN")
 	    .antMatchers("/carrinho/**").permitAll()
 	    .antMatchers("/pagamento/**").permitAll()
-	    .antMatchers(HttpMethod.GET, "/produtos").permitAll()
+	    .antMatchers(HttpMethod.GET, "/produtos").hasRole("ADMIN")
 	    .antMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN")
 	    .antMatchers("/produtos/**").permitAll()
 	    .antMatchers("/resources/**").permitAll()
 	    .antMatchers("/").permitAll()
+
+	    .antMatchers("/url-magica-maluca-oajksfbvad6584i57j54f9684nvi658efnoewfmnvowefnoeijn").permitAll()
+
 	    .anyRequest().authenticated()
 	    .and().formLogin().loginPage("/login").permitAll()
-	    .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));//aceitar fazer o logout via get
+	    .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 	}
-
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(usuarioDao).passwordEncoder(new BCryptPasswordEncoder());
